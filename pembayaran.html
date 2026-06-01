@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metode Pembayaran</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui,sans-serif;
+}
+
+body{
+min-height:100vh;
+padding:20px;
+color:white;
+background:
+radial-gradient(circle at top left,#7c3aed,#0f172a 35%),
+linear-gradient(135deg,#0f172a,#020617);
+}
+
+.back{
+display:inline-block;
+padding:12px 18px;
+background:rgba(255,255,255,.08);
+border-radius:14px;
+text-decoration:none;
+color:white;
+margin-bottom:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:8px;
+}
+
+.sub{
+text-align:center;
+opacity:.7;
+margin-bottom:25px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:20px;
+}
+
+.card{
+position:relative;
+overflow:hidden;
+padding:25px;
+border-radius:28px;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.bg-logo{
+position:absolute;
+right:-25px;
+top:10px;
+width:180px;
+opacity:.08;
+filter:brightness(0) invert(1);
+pointer-events:none;
+}
+
+.bg-text{
+position:absolute;
+bottom:-15px;
+right:10px;
+font-size:70px;
+font-weight:900;
+opacity:.08;
+pointer-events:none;
+}
+
+.brand-logo{
+width:85px;
+height:85px;
+background:white;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+margin-bottom:15px;
+position:relative;
+z-index:2;
+}
+
+.brand-logo img{
+width:75%;
+height:75%;
+object-fit:contain;
+}
+
+.title{
+font-size:24px;
+font-weight:bold;
+margin-bottom:10px;
+position:relative;
+z-index:2;
+}
+
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+background:rgba(255,255,255,.18);
+font-size:12px;
+font-weight:bold;
+margin-bottom:15px;
+position:relative;
+z-index:2;
+}
+
+.number{
+font-size:22px;
+font-weight:bold;
+margin-bottom:8px;
+position:relative;
+z-index:2;
+}
+
+.owner{
+margin-bottom:15px;
+position:relative;
+z-index:2;
+}
+
+.copy-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+background:white;
+font-weight:bold;
+cursor:pointer;
+position:relative;
+z-index:2;
+}
+
+.dana{
+background:linear-gradient(135deg,#00b4ff,#0080ff,#004cff);
+}
+
+.ovo{
+background:linear-gradient(135deg,#9333ea,#6d28d9,#4c1d95);
+}
+
+.gopay{
+background:linear-gradient(135deg,#00d2a0,#00a884,#007a61);
+}
+
+.bca{
+background:linear-gradient(135deg,#2563eb,#1d4ed8,#38bdf8);
+}
+
+.qris{
+margin-top:25px;
+background:rgba(255,255,255,.06);
+padding:25px;
+border-radius:28px;
+text-align:center;
+}
+
+.qris-img{
+width:260px;
+max-width:100%;
+background:white;
+padding:10px;
+border-radius:18px;
+margin:15px 0;
+}
+
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#22c55e;
+padding:14px 18px;
+border-radius:12px;
+font-weight:bold;
+opacity:0;
+transition:.3s;
+}
+.qris-card{
+margin-top:30px;
+padding:25px;
+border-radius:30px;
+
+background:
+linear-gradient(
+135deg,
+rgba(124,58,237,.35),
+rgba(37,99,235,.25)
+);
+
+border:1px solid rgba(255,255,255,.1);
+
+backdrop-filter:blur(20px);
+
+box-shadow:
+0 15px 40px rgba(0,0,0,.25);
+}
+
+.qris-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.qris-header h2{
+margin-bottom:5px;
+}
+
+.qris-header p{
+opacity:.7;
+font-size:14px;
+}
+
+.qris-badge{
+padding:8px 15px;
+border-radius:999px;
+background:#22c55e;
+font-weight:bold;
+}
+
+.qris-box{
+position:relative;
+width:300px;
+max-width:100%;
+margin:auto;
+padding:15px;
+
+background:white;
+
+border-radius:25px;
+
+overflow:hidden;
+
+box-shadow:
+0 0 30px rgba(255,255,255,.25);
+}
+
+.qris-img{
+width:100%;
+display:block;
+border-radius:15px;
+}
+
+.scan-line{
+position:absolute;
+left:0;
+top:0;
+
+width:100%;
+height:4px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#00ff88,
+transparent
+);
+
+animation:scan 2s linear infinite;
+
+z-index:10;
+}
+
+@keyframes scan{
+0%{
+top:0;
+}
+100%{
+top:100%;
+}
+}
+
+.supported{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+margin-top:20px;
+}
+
+.supported span{
+padding:8px 14px;
+border-radius:999px;
+
+background:
+rgba(255,255,255,.08);
+
+font-size:13px;
+font-weight:bold;
+}
+
+.qris-note{
+text-align:center;
+margin-top:15px;
+opacity:.8;
+}
+.download-btn{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+width:280px;
+max-width:100%;
+
+margin:20px auto 0;
+padding:16px 20px;
+
+text-decoration:none;
+font-weight:700;
+font-size:15px;
+
+color:white;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#06b6d4,
+#2563eb,
+#7c3aed
+);
+
+box-shadow:
+0 10px 25px rgba(37,99,235,.35);
+
+transition:.3s;
+
+position:relative;
+overflow:hidden;
+}
+
+.download-btn::before{
+content:"";
+
+position:absolute;
+top:0;
+left:-100%;
+
+width:50%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.4),
+transparent
+);
+
+transition:.6s;
+}
+
+.download-btn:hover{
+transform:translateY(-4px);
+
+box-shadow:
+0 15px 35px rgba(37,99,235,.45);
+}
+
+.download-btn:hover::before{
+left:150%;
+}
+
+.toast.show{
+opacity:1;
+}
+
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast">
+✅ Berhasil disalin
+</div>
+
+<a href="https://whatsapp.com/channel/0029VbCyr4dLI8YaVkgdw23X" class="back">⬅ Kembali</a>
+
+<h1>💳 Metode Pembayaran</h1>
+<div class="sub">Pilih metode pembayaran yang tersedia</div>
+
+<div class="grid">
+
+<!-- DANA -->
+<div class="card dana">
+
+<img src="dana2.jpg" class="bg-logo">
+<div class="bg-text">DANA</div>
+
+<div class="brand-logo">
+<img src="dana2.jpg">
+</div>
+
+<div class="title">DANA</div>
+<div class="badge">🟢 Aktif</div>
+
+<div class="number">0881038299766</div>
+<div class="owner">A/N Agung Adek</div>
+
+<button class="copy-btn"
+onclick="copyText('081234567890')">
+📋 Salin Nomor
+</button>
+
+</div>
+
+<!-- OVO -->
+<div class="card ovo">
+
+<img src="ovo1.jpg" class="bg-logo">
+<div class="bg-text">OVO</div>
+
+<div class="brand-logo">
+<img src="ovo1.jpg">
+</div>
+
+<div class="title">OVO</div>
+<div class="badge">🟢 Aktif</div>
+
+<div class="number">089699696624</div>
+<div class="owner">A/N Agung Adek</div>
+
+<button class="copy-btn"
+onclick="copyText('081234567890')">
+📋 Salin Nomor
+</button>
+
+</div>
+
+<!-- GOPAY -->
+<div class="card gopay">
+
+<img src="gopay.jpg" class="bg-logo">
+<div class="bg-text">GOPAY</div>
+
+<div class="brand-logo">
+<img src="gopay.jpg">
+</div>
+
+<div class="title">GoPay</div>
+<div class="badge">🟢 Aktif</div>
+
+<div class="number">089667877553</div>
+<div class="owner">A/N Agung Adek</div>
+
+<button class="copy-btn"
+onclick="copyText('081234567890')">
+📋 Salin Nomor
+</button>
+
+</div>
+
+<!-- BCA -->
+<div class="card bca">
+
+<img src="bca.jpg" class="bg-logo">
+<div class="bg-text">BCA</div>
+
+<div class="brand-logo">
+<img src="bca.jpg">
+</div>
+
+<div class="title">Bank BCA</div>
+<div class="badge">🟢 Aktif</div>
+
+<div class="number">1234567890</div>
+<div class="owner">A/N Agung Adanka</div>
+
+<button class="copy-btn"
+onclick="copyText('1234567890')">
+📋 Salin Rekening
+</button>
+
+</div>
+
+</div>
+
+<div class="qris-card">
+
+<div class="qris-header">
+    <div>
+        <h2>⚡ QRIS Payment</h2>
+        <p>Pembayaran Instan Semua E-Wallet</p>
+    </div>
+
+    <div class="qris-badge">
+        24/7
+    </div>
+</div>
+
+
+<div class="qris-box">
+
+    <div class="scan-line"></div>
+
+    <img src="qris3.jpg"
+    class="qris-img">
+
+</div>
+
+<a href="qris3.jpg"
+download="qris3.jpg"
+class="download-btn">
+
+⬇️ Download QRIS
+
+</a>
+
+<div class="supported">
+
+    <span>DANA</span>
+    <span>OVO</span>
+    <span>GoPay</span>
+    <span>ShopeePay</span>
+    <span>SeaBank</span>
+    <span>BCA</span>
+
+</div>
+
+<p class="qris-note">
+    Scan QRIS menggunakan aplikasi pembayaran favorit Anda.
+</p>
+
+</div>
+
+<script>
+function copyText(text){
+
+navigator.clipboard.writeText(text);
+
+let toast =
+document.getElementById("toast");
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2000);
+
+}
+</script>
+
+</body>
+</html>
